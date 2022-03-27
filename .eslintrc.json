@@ -48,6 +48,13 @@
         ],
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading": "off",
+        "@typescript-eslint/no-empty-interface": [
+            "error",
+            {
+                "allowSingleExtends": true
+            }
+        ],
+        "camelcase": "off",
         "prettier/prettier": "error"
     },
     "settings": {
