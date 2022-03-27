@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "memoryflashmobile",
+    "slug": "memoryflashmobile",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
