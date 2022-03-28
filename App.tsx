@@ -14,8 +14,8 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-import theme from './src/global/styles/theme';
 import { Login } from './src/screens/Login';
+import theme from './src/global/styles/theme';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
