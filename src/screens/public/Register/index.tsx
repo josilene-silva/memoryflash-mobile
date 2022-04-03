@@ -4,15 +4,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { InputForm } from '../../components/Form/InputForm';
+import { InputForm } from '../../../components/Form/InputForm';
 import {
   Container,
   Title,
   Subtitle,
   Header,
   Form,
-  ForgotPasswordText,
-  ForgotPassword,
   Fields,
   AccountAction,
   Question,
@@ -21,25 +19,30 @@ import {
   ActionText,
 } from './styles';
 
-import { Button } from '../../components/Form/Button';
+import { Button } from '../../../components/Form/Button';
 
-import api from '../../services/api';
-
-import { useAuth } from '../../hooks/auth';
-import { IRouterProps } from '../../routes/navigation';
+import api from '../../../services/api';
+import { IRouterProps } from '../../../routes/navigation';
 
 type Inputs = {
   password?: string;
   email?: string;
+  name?: string;
+  confirmPassword?: string;
 };
 
-export function Login({ navigation }: IRouterProps) {
+export function Register({ navigation }: IRouterProps) {
   const schema = Yup.object().shape({
     email: Yup.string().required('Email é obrigatório'),
     password: Yup.string().required('Senha é obrigatória'),
+    name: Yup.string().required('Nome é obrigatório'),
+    confirmPassword: Yup.string()
+      .oneOf(
+        [Yup.ref('password'), null],
+        'Confirmar senha tem que ser igual à senha',
+      )
+      .required('Confirmar senha é obrigatório'),
   });
-
-  const { onAuthUser, user } = useAuth();
 
   const {
     control,
@@ -49,19 +52,15 @@ export function Login({ navigation }: IRouterProps) {
     resolver: yupResolver(schema),
   });
 
-  async function handleRegister({ email, password }: Inputs) {
+  async function handleRegister({ email, password, name }: Inputs) {
     const payload = {
       email,
       password,
+      name,
     };
     try {
-      const { data } = await api.post('/login', payload);
-      onAuthUser({
-        name: data.user.name,
-        email: data.user.email,
-        token: data.token,
-      });
-      Alert.alert(`Success`, `Bem vindo(a) ${user.name}`);
+      await api.post('/users', payload);
+      Alert.alert(`Success`, `Usuário cadastrado`);
     } catch (err) {
       Alert.alert('Error', `${err.response.data.message}`);
     }
@@ -71,12 +70,21 @@ export function Login({ navigation }: IRouterProps) {
     <Scroll>
       <Container>
         <Header>
-          <Title>Bem vindo de volta!</Title>
-          <Subtitle>Use suas credenciais para entrar na sua conta</Subtitle>
+          <Title>Crie uma nova conta</Title>
+          <Subtitle>Crie uma conta para gerenciar seus flashcards</Subtitle>
         </Header>
 
         <Form>
           <Fields>
+            <InputForm
+              placeholder="Nome"
+              name="name"
+              control={control}
+              autoCapitalize="none"
+              error={errors.name && errors.name.message}
+              returnKeyType="next"
+            />
+
             <InputForm
               placeholder="Email"
               control={control}
@@ -93,21 +101,26 @@ export function Login({ navigation }: IRouterProps) {
               name="password"
               secureTextEntry
               error={errors.password && errors.password.message}
+              returnKeyType="next"
             />
 
-            <ForgotPassword>
-              <ForgotPasswordText>Esqueceu sua senha?</ForgotPasswordText>
-            </ForgotPassword>
+            <InputForm
+              placeholder="Confirmar senha"
+              control={control}
+              name="confirmPassword"
+              secureTextEntry
+              error={errors.confirmPassword && errors.confirmPassword.message}
+            />
           </Fields>
 
-          <Button title="Entrar" onPress={handleSubmit(handleRegister)} />
+          <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
         </Form>
 
         <AccountAction>
-          <Question>Não possui conta? </Question>
+          <Question>Já possui uma conta? </Question>
           <Action>
-            <ActionText onPress={() => navigation.navigate('Register')}>
-              Cadastre-se
+            <ActionText onPress={() => navigation.navigate('Login')}>
+              Entrar
             </ActionText>
           </Action>
         </AccountAction>

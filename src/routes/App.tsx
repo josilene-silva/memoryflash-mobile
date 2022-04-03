@@ -5,10 +5,10 @@ import { Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import theme from '../global/styles/theme';
-import { Explore } from '../screens/Explore';
-import { Sets } from '../screens/Sets';
-import { Statistics } from '../screens/Statistics';
-import { Profile } from '../screens/Profile';
+import { Explore } from '../screens/authenticated/Explore';
+import { Sets } from '../screens/authenticated/Sets';
+import { Statistics } from '../screens/authenticated/Statistics';
+import { Profile } from '../screens/authenticated/Profile';
 
 const Tab = createBottomTabNavigator();
 
