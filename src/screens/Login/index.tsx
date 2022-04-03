@@ -26,13 +26,14 @@ import { Button } from '../../components/Form/Button';
 import api from '../../services/api';
 
 import { useAuth } from '../../hooks/auth';
+import { IRouterProps } from '../../routes/navigation';
 
 type Inputs = {
   password?: string;
   email?: string;
 };
 
-export function Login() {
+export function Login({ navigation }: IRouterProps) {
   const schema = Yup.object().shape({
     email: Yup.string().required('Email é obrigatório'),
     password: Yup.string().required('Senha é obrigatória'),
@@ -105,7 +106,9 @@ export function Login() {
         <AccountAction>
           <Question>Não possui conta? </Question>
           <Action>
-            <ActionText>Cadastre-se</ActionText>
+            <ActionText onPress={() => navigation.navigate('Register')}>
+              Cadastre-se
+            </ActionText>
           </Action>
         </AccountAction>
       </Container>

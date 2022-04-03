@@ -14,9 +14,9 @@ import {
   Poppins_500Medium,
 } from '@expo-google-fonts/poppins';
 
-import { Login } from './src/screens/Login';
 import theme from './src/global/styles/theme';
 import { AuthProvider } from './src/contexts/AuthContext';
+import { Routes } from './src/routes';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,7 +35,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <AuthProvider>
-        <Login />
+        <Routes />
       </AuthProvider>
     </ThemeProvider>
   );
