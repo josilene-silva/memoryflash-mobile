@@ -16,6 +16,7 @@ import {
 
 import { Login } from './src/screens/Login';
 import theme from './src/global/styles/theme';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -33,7 +34,9 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Login />
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

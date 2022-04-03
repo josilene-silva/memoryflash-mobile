@@ -13,6 +13,7 @@
     "@expo-google-fonts/poppins": "^0.2.2",
     "@hookform/resolvers": "^2.8.8",
     "@react-navigation/native": "^6.0.8",
+    "axios": "^0.26.1",
     "expo": "~44.0.2",
     "expo-app-loading": "~1.3.0",
     "expo-font": "~10.0.4",

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -19,7 +20,12 @@ import {
   Scroll,
   ActionText,
 } from './styles';
+
 import { Button } from '../../components/Form/Button';
+
+import api from '../../services/api';
+
+import { useAuth } from '../../hooks/auth';
 
 type Inputs = {
   password?: string;
@@ -32,6 +38,8 @@ export function Login() {
     password: Yup.string().required('Senha é obrigatória'),
   });
 
+  const { onAuthUser, user } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -40,13 +48,27 @@ export function Login() {
     resolver: yupResolver(schema),
   });
 
-  function handleRegister(data: Inputs) {
-    console.log(data);
+  async function handleRegister({ email, password }: Inputs) {
+    const payload = {
+      email,
+      password,
+    };
+    try {
+      const { data } = await api.post('/login', payload);
+      onAuthUser({
+        name: data.user.name,
+        email: data.user.email,
+        token: data.token,
+      });
+      Alert.alert(`Success`, `Bem vindo(a) ${user.name}`);
+    } catch (err) {
+      Alert.alert('Error', `${err.response.data.message}`);
+    }
   }
 
   return (
-    <Container>
-      <Scroll>
+    <Scroll>
+      <Container>
         <Header>
           <Title>Bem vindo de volta!</Title>
           <Subtitle>Use suas credenciais para entrar na sua conta</Subtitle>
@@ -86,7 +108,7 @@ export function Login() {
             <ActionText>Cadastre-se</ActionText>
           </Action>
         </AccountAction>
-      </Scroll>
-    </Container>
+      </Container>
+    </Scroll>
   );
 }
