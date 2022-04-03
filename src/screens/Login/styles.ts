@@ -1,10 +1,7 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
-export const Container = styled.View`
-  flex: 1;
-  background-color: ${({ theme }) => theme.colors.white};
-`;
+export const Container = styled.View``;
 
 export const Scroll = styled.ScrollView`
   flex: 1;
@@ -34,7 +31,6 @@ export const Subtitle = styled.Text`
 `;
 
 export const Form = styled.View`
-  flex: 1;
   padding-left: 20px;
   padding-right: 20px;
 `;
@@ -58,10 +54,10 @@ export const ForgotPasswordText = styled.Text`
 `;
 
 export const AccountAction = styled.View`
-  height: ${RFValue(190)}px;
   flex-direction: row;
   align-items: flex-end;
   justify-content: center;
+  margin-top: ${RFPercentage(20)}px;
 `;
 export const Question = styled.Text`
   font-size: ${RFValue(12)}px;
