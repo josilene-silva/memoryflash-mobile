@@ -54,7 +54,7 @@ export function Sets({ navigation }: IRouterProps) {
       <FloatButton>
         <RoundButton
           title="Novo conjunto"
-          onPress={() => console.log('novo conjunto')}
+          onPress={() => navigation.navigate('CreateSets')}
         />
       </FloatButton>
     </Container>
