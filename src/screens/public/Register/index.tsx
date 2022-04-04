@@ -21,7 +21,7 @@ import {
 
 import { Button } from '../../../components/Form/Button';
 
-import api from '../../../services/api';
+import { api } from '../../../services/api';
 import { IRouterProps } from '../../../routes/navigation';
 
 type Inputs = {

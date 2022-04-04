@@ -23,7 +23,7 @@ import {
 
 import { Button } from '../../../components/Form/Button';
 
-import api from '../../../services/api';
+import { api, setupAxiosToken } from '../../../services/api';
 
 import { useAuth } from '../../../hooks/auth';
 import { IRouterProps } from '../../../routes/navigation';
@@ -61,6 +61,8 @@ export function Login({ navigation }: IRouterProps) {
         email: data.user.email,
         token: data.token,
       });
+
+      setupAxiosToken(data.token);
       Alert.alert(`Success`, `Bem vindo(a) ${user.name}`);
     } catch (err) {
       Alert.alert('Error', `${err.response.data.message}`);
