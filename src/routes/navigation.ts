@@ -2,10 +2,12 @@ import {
   NavigationProp,
   createNavigationContainerRef,
   ParamListBase,
+  Route,
 } from '@react-navigation/native';
 
 export interface IRouterProps {
   navigation: NavigationProp<ParamListBase>;
+  route: Partial<Route<string, object | undefined>>;
 }
 
 export const navigationRef = createNavigationContainerRef();

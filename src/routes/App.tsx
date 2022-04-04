@@ -6,9 +6,9 @@ import { Feather } from '@expo/vector-icons';
 
 import theme from '../global/styles/theme';
 import { Explore } from '../screens/authenticated/Explore';
-import { Sets } from '../screens/authenticated/Sets';
 import { Statistics } from '../screens/authenticated/Statistics';
 import { Profile } from '../screens/authenticated/Profile';
+import { SetsRoutes } from './Sets';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,13 +43,14 @@ export function App() {
       />
 
       <Tab.Screen
-        name="Sets"
-        component={Sets}
+        name="SetsRoutes"
+        component={SetsRoutes}
         options={{
           title: 'Conjuntos',
           tabBarIcon: ({ size, color }) => (
             <Feather name="copy" size={size} color={color} />
           ),
+          // tabBarStyle: { display: 'none' },
         }}
       />
 
