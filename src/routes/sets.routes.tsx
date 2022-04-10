@@ -4,6 +4,7 @@ import { useTheme } from 'styled-components';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { Platform } from 'react-native';
 
+import { ListSet } from '../screens/authenticated/Sets/screens/ListSet';
 import { Sets } from '../screens/authenticated/Sets';
 import { CreateSet } from '../screens/authenticated/Sets/screens';
 
@@ -48,6 +49,20 @@ export function SetsRoutes({ navigation, route }: IRouterProps) {
             fontSize: 22,
           },
         }}
+      />
+
+      <Stack.Screen
+        name="ListSet"
+        component={ListSet}
+        options={({ route: routeLis }: IRouterProps) => ({
+          headerShown: true,
+          title: routeLis.params.name,
+          headerTitleStyle: {
+            color: theme.colors.primary,
+            fontFamily: theme.fonts.montserrat_bold,
+            fontSize: 22,
+          },
+        })}
       />
     </Stack.Navigator>
   );

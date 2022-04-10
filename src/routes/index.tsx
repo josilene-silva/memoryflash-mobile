@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Container } from './styles';
-import { Auth } from './Auth';
-import { App } from './App';
+import { Auth } from './auth.routes';
+import { App } from './app.routes';
 import { useAuth } from '../hooks/auth';
 import { navigationRef } from './navigation';
 

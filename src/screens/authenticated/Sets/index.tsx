@@ -48,7 +48,12 @@ export function Sets({ navigation }: IRouterProps) {
       <SetsList
         data={sets}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <SetsCard data={item} />}
+        renderItem={({ item }) => (
+          <SetsCard
+            data={item}
+            onPress={() => navigation.navigate('ListSet', { name: item.name })}
+          />
+        )}
       />
 
       <FloatButton>

@@ -8,7 +8,7 @@ import theme from '../global/styles/theme';
 import { Explore } from '../screens/authenticated/Explore';
 import { Statistics } from '../screens/authenticated/Statistics';
 import { Profile } from '../screens/authenticated/Profile';
-import { SetsRoutes } from './Sets';
+import { SetsRoutes } from './sets.routes';
 
 const Tab = createBottomTabNavigator();
 
