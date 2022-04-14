@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
-import { TouchableOpacityProps } from 'react-native';
+import { ViewProps } from 'react-native';
 
 import { Container } from './styles';
 
-interface CardLayoutProps extends TouchableOpacityProps {
+interface CardLayoutProps extends ViewProps {
   children: ReactNode;
 }
 
