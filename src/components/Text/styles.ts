@@ -1,4 +1,4 @@
-import { TextPropTypes, Text } from 'react-native';
+import { Text } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
@@ -23,11 +23,12 @@ export interface ITextProps {
     | 'poppins_regular'
     | 'poppins_medium'
     | 'poppins_bold';
-  fontSize: number;
+  fontSize?: number;
 }
 
 export const Container = styled(Text)<ITextProps>`
   color: ${({ theme, color }) => theme.colors[color]};
-  font-size: ${({ fontSize }) => RFValue(fontSize)}px;
+  font-size: ${({ fontSize }) =>
+    fontSize ? RFValue(fontSize) : RFValue(13)}px;
   font-family: ${({ theme, fontFamily }) => theme.fonts[fontFamily]};
 `;
