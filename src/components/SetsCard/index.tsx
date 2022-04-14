@@ -7,12 +7,13 @@ import { Category, SetInfo, SetTitle, CardsAmount } from './styles';
 
 interface Props {
   data: DataListProps;
+  onPress: () => void;
 }
 
-export function SetsCard({ data }: Props) {
+export function SetsCard({ data, onPress }: Props) {
   const cardsAmount = data.cards.length;
   return (
-    <CardLayout style={{ marginBottom: 20 }}>
+    <CardLayout style={{ marginBottom: 20 }} onPress={onPress}>
       <Category>{data.category.name}</Category>
       <SetInfo>
         <SetTitle>{data.name}</SetTitle>
