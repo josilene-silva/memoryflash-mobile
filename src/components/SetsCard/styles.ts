@@ -1,6 +1,8 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
+export const Container = styled.TouchableOpacity``;
+
 export const Category = styled.Text`
   font-family: ${({ theme }) => theme.fonts.poppins_bold};
   font-size: ${RFValue(10)}px;

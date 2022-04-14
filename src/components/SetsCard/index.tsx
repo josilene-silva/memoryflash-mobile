@@ -4,7 +4,7 @@ import { ISet } from 'src/data/types';
 
 import { CardLayout } from '../Layout/Card';
 
-import { Category, SetInfo, SetTitle, CardsAmount } from './styles';
+import { Category, SetInfo, SetTitle, CardsAmount, Container } from './styles';
 
 interface Props {
   data: ISet;
@@ -14,18 +14,20 @@ interface Props {
 export function SetsCard({ data, onPress }: Props) {
   const cardsAmount = data.cards.length;
   return (
-    <CardLayout style={{ marginBottom: 20 }} onPress={onPress}>
-      <Category>{data.category.name}</Category>
-      <SetInfo>
-        <SetTitle>{data.name}</SetTitle>
-        <CardsAmount>
-          {cardsAmount === 0
-            ? 'Nenhum cartão'
-            : cardsAmount > 1
-            ? `${cardsAmount} cartões`
-            : `${cardsAmount} cartão`}
-        </CardsAmount>
-      </SetInfo>
-    </CardLayout>
+    <Container onPress={onPress}>
+      <CardLayout style={{ marginBottom: 20 }}>
+        <Category>{data.category.name}</Category>
+        <SetInfo>
+          <SetTitle>{data.name}</SetTitle>
+          <CardsAmount>
+            {cardsAmount === 0
+              ? 'Nenhum cartão'
+              : cardsAmount > 1
+              ? `${cardsAmount} cartões`
+              : `${cardsAmount} cartão`}
+          </CardsAmount>
+        </SetInfo>
+      </CardLayout>
+    </Container>
   );
 }
