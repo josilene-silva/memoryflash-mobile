@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather } from '@expo/vector-icons';
 
+export const Container = styled.TouchableOpacity``;
+
 export const IconContainer = styled.View`
   flex-direction: row;
   align-items: center;
