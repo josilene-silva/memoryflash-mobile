@@ -1,44 +1,85 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
-import { Text } from '../../../../../components/Text';
-import { CardLayout } from '../../../../../components/Layout/Card';
+import { IRouterProps } from 'src/routes/navigation';
+import { RoundButton } from 'src/components/RoundButton';
+import { Text } from 'src/components/Text';
+import { CardLayout } from 'src/components/Layout/Card';
 
-import { Container, Scroll, Icon, IconContainer, IconItem } from './styles';
+import { ISet } from 'src/data/types';
 
-export function ListSet() {
+import { api } from 'src/services/api';
+import { CardsCard } from 'src/components/CardsCard';
+
+import {
+  Container,
+  Scroll,
+  Icon,
+  IconContainer,
+  IconItem,
+  CardsList,
+  FloatButton,
+} from './styles';
+
+export function ListSet({ route }: IRouterProps) {
+  const { id } = route.params;
+
   const theme = useTheme();
+  const [set, setSet] = useState<ISet>({
+    id: '',
+    name: '',
+    description: '',
+    category: {
+      name: '',
+    },
+    cards: [
+      {
+        id: '',
+        front: '',
+        back: '',
+      },
+    ],
+  });
+
+  async function loadSet() {
+    try {
+      const { data } = await api.get(`/sets/${id}`);
+      setSet(data);
+    } catch (error) {}
+  }
+
+  useFocusEffect(
+    useCallback(() => {
+      loadSet();
+    }, []),
+  );
 
   return (
     <Scroll>
       <Container>
         <IconContainer>
           <IconItem>
-            <Icon color={theme.colors.text_dark} size={24} name="edit-3" />
-            <Text
-              variant={{
-                fontFamily: 'poppins_medium',
-                color: 'text_dark',
-              }}
-            >
-              Editar
-            </Text>
+            <Icon color={theme.colors.gray_medium} size={24} name="trash" />
           </IconItem>
 
           <IconItem>
-            <Icon color={theme.colors.gray_medium} size={24} name="trash" />
-            <Text
-              variant={{
-                fontFamily: 'poppins_medium',
-                color: 'gray_medium',
-              }}
-            >
-              Excluir
-            </Text>
+            <Icon color={theme.colors.text_dark} size={24} name="edit-3" />
           </IconItem>
         </IconContainer>
 
         <CardLayout style={{ marginTop: 30 }}>
+          <Text
+            variant={{
+              fontFamily: 'montserrat_bold',
+              color: 'primary',
+              fontSize: 10,
+            }}
+            style={{ marginBottom: 10 }}
+          >
+            {set.category.name}
+          </Text>
+
           <Text
             variant={{
               fontFamily: 'montserrat_bold',
@@ -54,8 +95,7 @@ export function ListSet() {
             }}
             style={{ marginTop: 11 }}
           >
-            A trigonometria é a área da matemática que estuda a relação entre a
-            medida dos lados de um triângulo e seus ângulos.
+            {set.description}
           </Text>
         </CardLayout>
 
@@ -71,31 +111,20 @@ export function ListSet() {
           </Text>
         </IconItem>
 
-        <CardLayout style={{ marginBottom: 20 }}>
-          <Text
-            variant={{
-              fontFamily: 'montserrat_bold',
-              color: 'text_dark',
-            }}
-            style={{ marginTop: 11 }}
-          >
-            Triângulo Retângulo
-          </Text>
-          <Text
-            variant={{
-              fontFamily: 'poppins_regular',
-              color: 'text_dark',
-            }}
-          >
-            É um triângulo que contém um ângulo de 90º, independentemente de
-            qual lado ele estiver.
-          </Text>
-          <IconContainer style={{ justifyContent: 'flex-start' }}>
-            <Icon color={theme.colors.gray_medium} size={24} name="trash" />
-            <Icon color={theme.colors.text_dark} size={24} name="edit-3" />
-          </IconContainer>
-        </CardLayout>
+        <CardsList
+          data={set.cards}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <CardsCard data={item} onPress={() => console.log('clicou')} />
+          )}
+        />
       </Container>
+      <FloatButton>
+        <RoundButton
+          title="Iniciar prática"
+          onPress={() => console.log('clocou')}
+        />
+      </FloatButton>
     </Scroll>
   );
 }
