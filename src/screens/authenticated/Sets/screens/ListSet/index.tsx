@@ -22,7 +22,7 @@ import {
   FloatButton,
 } from './styles';
 
-export function ListSet({ route }: IRouterProps) {
+export function ListSet({ route, navigation }: IRouterProps) {
   const { id } = route.params;
 
   const theme = useTheme();
@@ -99,7 +99,10 @@ export function ListSet({ route }: IRouterProps) {
           </Text>
         </CardLayout>
 
-        <IconItem style={{ marginVertical: 29 }}>
+        <IconItem
+          style={{ marginVertical: 29 }}
+          onPress={() => navigation.navigate('CreateCard', { setId: set.id })}
+        >
           <Icon color={theme.colors.primary} size={32} name="plus" />
           <Text
             variant={{

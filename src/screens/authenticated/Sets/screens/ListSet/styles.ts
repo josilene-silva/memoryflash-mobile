@@ -5,7 +5,9 @@ import { Feather } from '@expo/vector-icons';
 
 import { ICard } from '../../../../../data/types';
 
-export const Container = styled.SafeAreaView``;
+export const Container = styled.View`
+  flex: 1;
+`;
 
 export const Scroll = styled.SafeAreaView`
   flex: 1;
@@ -44,7 +46,7 @@ export const CardsList = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingBottom: 30,
+    paddingBottom: 10,
   },
 })``;
 
