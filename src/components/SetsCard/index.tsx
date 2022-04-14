@@ -1,12 +1,13 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
+import { ISet } from 'src/data/types';
 
-import { DataListProps } from '../../screens/authenticated/Sets';
 import { CardLayout } from '../Layout/Card';
 
 import { Category, SetInfo, SetTitle, CardsAmount } from './styles';
 
 interface Props {
-  data: DataListProps;
+  data: ISet;
   onPress: () => void;
 }
 
