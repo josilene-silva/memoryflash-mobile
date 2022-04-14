@@ -1,30 +1,19 @@
-import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
-import { RoundButton } from '../../../components/RoundButton';
+import { useFocusEffect } from '@react-navigation/native';
 
-import { SetsCard } from '../../../components/SetsCard';
-import { IRouterProps } from '../../../routes/navigation';
-import { api } from '../../../services/api';
+import { RoundButton } from 'src/components/RoundButton';
+import { SetsCard } from 'src/components/SetsCard';
+
+import { IRouterProps } from 'src/routes/navigation';
+
+import { ISet } from 'src/data/types';
+
+import { api } from 'src/services/api';
+
 import { Container, Header, Title, SetsList, FloatButton } from './styles';
 
-export interface ICategory {
-  name: string;
-}
-
-export interface ICard {
-  id: string;
-  name: string;
-}
-export interface DataListProps {
-  id: string;
-  name: string;
-  description: string;
-  category: ICategory;
-  cards: ICard[];
-}
-
 export function Sets({ navigation }: IRouterProps) {
-  const [sets, setSets] = useState<DataListProps[]>([]);
+  const [sets, setSets] = useState<ISet[]>([]);
 
   async function loadSets() {
     try {
@@ -51,7 +40,9 @@ export function Sets({ navigation }: IRouterProps) {
         renderItem={({ item }) => (
           <SetsCard
             data={item}
-            onPress={() => navigation.navigate('ListSet', { name: item.name })}
+            onPress={() =>
+              navigation.navigate('ListSet', { name: item.name, id: item.id })
+            }
           />
         )}
       />

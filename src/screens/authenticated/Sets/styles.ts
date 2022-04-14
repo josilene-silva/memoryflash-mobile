@@ -1,7 +1,7 @@
 import { FlatList, FlatListProps } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { DataListProps } from '.';
+import { ISet } from 'src/data/types';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -23,9 +23,7 @@ export const Title = styled.Text`
 `;
 
 export const SetsList = styled(
-  FlatList as new (
-    props: FlatListProps<DataListProps>,
-  ) => FlatList<DataListProps>,
+  FlatList as new (props: FlatListProps<ISet>) => FlatList<ISet>,
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
