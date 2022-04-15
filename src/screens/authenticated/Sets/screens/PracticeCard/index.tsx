@@ -9,6 +9,7 @@ import {
 import { Text } from 'src/components/Text';
 import { RoundButton } from 'src/components/RoundButton';
 
+import { IRouterProps } from 'src/routes/navigation';
 import {
   Container,
   ProgressBar,
@@ -20,7 +21,7 @@ import {
   LevelButton,
 } from './styles';
 
-export function PracticeCard() {
+export function PracticeCard({ navigation }: IRouterProps) {
   const flipPositionAnimate = useSharedValue(0);
   const [side, setSide] = useState(0);
 
@@ -105,7 +106,7 @@ export function PracticeCard() {
       </ButtonContainer>
 
       <LevelContainer visible={side === 1}>
-        <LevelButton>
+        <LevelButton onPress={() => navigation.navigate('PracticeFinish')}>
           <Text
             variant={{
               fontFamily: 'poppins_bold',

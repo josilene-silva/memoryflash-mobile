@@ -9,6 +9,7 @@ import {
   CreateCard,
   CreateSet,
   PracticeCard,
+  PracticeFinish,
 } from '../screens/authenticated/Sets/screens';
 import { Sets } from '../screens/authenticated/Sets';
 
@@ -16,7 +17,12 @@ import { IRouterProps } from './navigation';
 
 const Stack = createNativeStackNavigator();
 
-const tabHiddenRoutes = ['CreateSets', 'CreateCard', 'PracticeCard'];
+const tabHiddenRoutes = [
+  'CreateSets',
+  'CreateCard',
+  'PracticeCard',
+  'PracticeFinish',
+];
 
 export function SetsRoutes({ navigation, route }: IRouterProps) {
   const theme = useTheme();
@@ -84,6 +90,7 @@ export function SetsRoutes({ navigation, route }: IRouterProps) {
       />
 
       <Stack.Screen name="PracticeCard" component={PracticeCard} />
+      <Stack.Screen name="PracticeFinish" component={PracticeFinish} />
     </Stack.Navigator>
   );
 }
