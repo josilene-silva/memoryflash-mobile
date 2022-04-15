@@ -125,7 +125,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
       <FloatButton>
         <RoundButton
           title="Iniciar prática"
-          onPress={() => console.log('clocou')}
+          onPress={() => navigation.navigate('PracticeCard')}
         />
       </FloatButton>
     </Scroll>
