@@ -10,6 +10,7 @@ import {
   CreateSet,
   PracticeCard,
   PracticeFinish,
+  SingleStatistic,
 } from '../screens/authenticated/Sets/screens';
 import { Sets } from '../screens/authenticated/Sets';
 
@@ -22,6 +23,7 @@ const tabHiddenRoutes = [
   'CreateCard',
   'PracticeCard',
   'PracticeFinish',
+  'SingleStatistic',
 ];
 
 export function SetsRoutes({ navigation, route }: IRouterProps) {
@@ -91,6 +93,19 @@ export function SetsRoutes({ navigation, route }: IRouterProps) {
 
       <Stack.Screen name="PracticeCard" component={PracticeCard} />
       <Stack.Screen name="PracticeFinish" component={PracticeFinish} />
+      <Stack.Screen
+        name="SingleStatistic"
+        component={SingleStatistic}
+        options={({ route: routeLis }: IRouterProps) => ({
+          headerShown: true,
+          title: routeLis.params.name,
+          headerTitleStyle: {
+            color: theme.colors.primary,
+            fontFamily: theme.fonts.montserrat_bold,
+            fontSize: 22,
+          },
+        })}
+      />
     </Stack.Navigator>
   );
 }
