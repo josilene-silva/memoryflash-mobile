@@ -16,12 +16,6 @@ export const Header = styled.View`
   justify-content: flex-end;
 `;
 
-export const Title = styled.Text`
-  font-size: ${RFValue(20)}px;
-  font-family: ${({ theme }) => theme.fonts.montserrat_bold};
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
 export const SetsList = styled(
   FlatList as new (props: FlatListProps<ISet>) => FlatList<ISet>,
 ).attrs({
