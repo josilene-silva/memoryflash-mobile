@@ -6,9 +6,10 @@ import { Feather } from '@expo/vector-icons';
 
 import theme from '../global/styles/theme';
 import { Explore } from '../screens/authenticated/Explore';
-import { Statistics } from '../screens/authenticated/Statistics';
 import { Profile } from '../screens/authenticated/Profile';
+
 import { SetsRoutes } from './sets.routes';
+import { StatisticsRoutes } from './statistics.routes';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,13 +51,12 @@ export function App() {
           tabBarIcon: ({ size, color }) => (
             <Feather name="copy" size={size} color={color} />
           ),
-          // tabBarStyle: { display: 'none' },
         }}
       />
 
       <Tab.Screen
-        name="Statistics"
-        component={Statistics}
+        name="StatisticsRoutes"
+        component={StatisticsRoutes}
         options={{
           title: 'Estatísticas',
           tabBarIcon: ({ size, color }) => (
