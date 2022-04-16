@@ -117,9 +117,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
         <CardsList
           data={set.cards}
           keyExtractor={item => item.id}
-          renderItem={({ item }) => (
-            <CardsCard data={item} onPress={() => console.log('clicou')} />
-          )}
+          renderItem={({ item }) => <CardsCard data={item} />}
         />
       </Container>
       <FloatButton>

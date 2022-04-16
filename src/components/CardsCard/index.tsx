@@ -10,14 +10,13 @@ import { IconContainer, Icon, IconItem, Container } from './styles';
 
 interface Props {
   data: ICard;
-  onPress: () => void;
 }
 
-export function CardsCard({ data, onPress }: Props) {
+export function CardsCard({ data }: Props) {
   const theme = useTheme();
 
   return (
-    <Container onPress={onPress}>
+    <Container>
       <CardLayout style={{ marginBottom: 20 }}>
         <Text
           variant={{
