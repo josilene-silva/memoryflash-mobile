@@ -13,7 +13,7 @@ import { Text } from 'src/components/Text';
 import { RoundButton } from 'src/components/RoundButton';
 
 import { IRouterProps } from 'src/routes/navigation';
-import { ICard } from 'src/data/types';
+import { ICard, ISet } from 'src/data/types';
 
 import { api } from 'src/services/api';
 
@@ -50,6 +50,15 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     },
   ]);
 
+  const [set, setSet] = useState<Omit<ISet, 'cards'>>({
+    id: '',
+    name: '',
+    description: '',
+    category: {
+      name: '',
+    },
+  });
+
   async function loadCardsSet() {
     try {
       const { data } = await api.get(`/sets/${id}`);
@@ -58,6 +67,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
         side: 0,
       }));
       setCards(cardsFormatted);
+      setSet(data);
     } catch (error) {}
   }
 
@@ -179,7 +189,10 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     try {
       const [_, response] = await Promise.all(promises);
       navigation.dispatch(
-        StackActions.replace('PracticeFinish', { id: response.data.id }),
+        StackActions.replace('PracticeFinish', {
+          id: response.data.id,
+          name: set.name,
+        }),
       );
     } catch {
       alert('Erro interno');

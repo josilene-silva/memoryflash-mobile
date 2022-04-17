@@ -16,6 +16,7 @@ import {
 
 export function PracticeFinish({ navigation, route }: IRouterProps) {
   const id = route.params?.id;
+  const name = route.params?.name;
 
   return (
     <Container>
@@ -36,7 +37,7 @@ export function PracticeFinish({ navigation, route }: IRouterProps) {
           onPress={() => {
             navigation.dispatch(
               StackActions.replace('SingleStatistic', {
-                name: 'Estudo de Trigonometria',
+                name,
                 id,
               }),
             );

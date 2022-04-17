@@ -40,15 +40,14 @@ export function StatisticsRoutes({ navigation, route }: IRouterProps) {
       <Stack.Screen
         name="GeneralStatistics"
         component={GeneralStatistics}
-        options={({ route: routeLis }: IRouterProps) => ({
+        options={{
           headerShown: true,
-          title: routeLis.params?.name,
           headerTitleStyle: {
             color: theme.colors.primary,
             fontFamily: theme.fonts.montserrat_bold,
             fontSize: 22,
           },
-        })}
+        }}
       />
     </Stack.Navigator>
   );

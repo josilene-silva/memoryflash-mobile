@@ -38,6 +38,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
         id: '',
         front: '',
         back: '',
+        difficultyLevel: 0,
       },
     ],
   });
