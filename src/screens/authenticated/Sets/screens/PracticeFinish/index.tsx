@@ -1,4 +1,5 @@
 /* eslint-disable global-require */
+import { StackActions } from '@react-navigation/native';
 import React from 'react';
 
 import { RoundButton } from 'src/components/RoundButton';
@@ -13,7 +14,9 @@ import {
   SkipButton,
 } from './styles';
 
-export function PracticeFinish({ navigation }: IRouterProps) {
+export function PracticeFinish({ navigation, route }: IRouterProps) {
+  const id = route.params?.id;
+
   return (
     <Container>
       <CelebrationImage source={require('src/assets/images/celebration.png')} />
@@ -29,15 +32,17 @@ export function PracticeFinish({ navigation }: IRouterProps) {
       </Text>
       <ButtonContainer>
         <RoundButton
-          title="Concluir"
+          title="Resultados"
           onPress={() => {
-            navigation.navigate('SingleStatistic', {
-              name: 'Estudo de Trigonometria',
-              // id: item.id,
-            });
+            navigation.dispatch(
+              StackActions.replace('SingleStatistic', {
+                name: 'Estudo de Trigonometria',
+                id,
+              }),
+            );
           }}
         />
-        <SkipButton>
+        <SkipButton onPress={() => navigation.goBack()}>
           <Text
             style={{ marginTop: 20 }}
             variant={{
@@ -45,7 +50,7 @@ export function PracticeFinish({ navigation }: IRouterProps) {
               color: 'primary',
             }}
           >
-            Resultados
+            Voltar
           </Text>
         </SkipButton>
       </ButtonContainer>

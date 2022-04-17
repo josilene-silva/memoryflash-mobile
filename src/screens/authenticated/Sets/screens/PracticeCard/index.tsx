@@ -175,7 +175,15 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
       api.patch(`/cards`, payloadCards),
       api.post(`/practices`, formatPracticePayload()),
     ];
-    await Promise.all(promises);
+
+    try {
+      const [_, response] = await Promise.all(promises);
+      navigation.dispatch(
+        StackActions.replace('PracticeFinish', { id: response.data.id }),
+      );
+    } catch {
+      alert('Erro interno');
+    }
   }
 
   function handleSelectDifficultyLevel(
@@ -187,11 +195,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
       changeCardAnimationSide();
       handleFlipCard();
     } else {
-      finishPractice()
-        .then(() =>
-          navigation.dispatch(StackActions.replace('PracticeFinish', { id })),
-        )
-        .catch(() => alert('Erro interno'));
+      finishPractice();
     }
   }
 
