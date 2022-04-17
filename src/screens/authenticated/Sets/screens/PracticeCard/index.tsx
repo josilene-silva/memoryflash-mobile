@@ -33,7 +33,7 @@ interface CardsProps extends ICard {
 }
 
 export function PracticeCard({ navigation, route }: IRouterProps) {
-  const { id } = route.params;
+  const id = route.params?.id;
 
   const flipPositionAnimate = useSharedValue(0);
 
@@ -110,6 +110,19 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     setCards(cardsUpdate);
   }
 
+  function changeCardDifficultyLevel(
+    item: CardsProps,
+    difficultyLevel: number,
+  ) {
+    const cardsUpdate = cards.map(card => {
+      if (card.id === item.id) {
+        card.difficultyLevel = difficultyLevel;
+      }
+      return card;
+    });
+    setCards(cardsUpdate);
+  }
+
   function handleSeeBack(card: CardsProps) {
     changeCardSide(card);
     handleFlipCard();
@@ -123,7 +136,10 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     setCurrentCard(prevState => prevState + 1);
   }
 
-  function handleSelectDifficultLevel() {
+  function handleSelectDifficultyLevel(
+    card: CardsProps,
+    difficultyLevel: number,
+  ) {
     const totalCards = cards.length - 1;
     if (currentCard < totalCards) {
       changeCardAnimationSide();
@@ -131,6 +147,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     } else {
       navigation.dispatch(StackActions.replace('PracticeFinish', { id }));
     }
+    changeCardDifficultyLevel(card, difficultyLevel);
   }
 
   return (
@@ -195,7 +212,9 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
               </ButtonContainer>
 
               <LevelContainer visible={item.side === 1}>
-                <LevelButton onPress={() => handleSelectDifficultLevel()}>
+                <LevelButton
+                  onPress={() => handleSelectDifficultyLevel(item, 0)}
+                >
                   <Text
                     variant={{
                       fontFamily: 'poppins_bold',
@@ -206,7 +225,9 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                     Fácil
                   </Text>
                 </LevelButton>
-                <LevelButton>
+                <LevelButton
+                  onPress={() => handleSelectDifficultyLevel(item, 1)}
+                >
                   <Text
                     variant={{
                       fontFamily: 'poppins_bold',
@@ -217,7 +238,9 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                     Mediano
                   </Text>
                 </LevelButton>
-                <LevelButton>
+                <LevelButton
+                  onPress={() => handleSelectDifficultyLevel(item, 2)}
+                >
                   <Text
                     variant={{
                       fontFamily: 'poppins_bold',
