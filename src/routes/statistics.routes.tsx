@@ -42,7 +42,7 @@ export function StatisticsRoutes({ navigation, route }: IRouterProps) {
         component={GeneralStatistics}
         options={({ route: routeLis }: IRouterProps) => ({
           headerShown: true,
-          title: routeLis.params.name,
+          title: routeLis.params?.name,
           headerTitleStyle: {
             color: theme.colors.primary,
             fontFamily: theme.fonts.montserrat_bold,

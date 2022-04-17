@@ -7,7 +7,7 @@ import {
 
 export interface IRouterProps {
   navigation: NavigationProp<ParamListBase>;
-  route: Partial<Route<string, object | undefined>>;
+  route: Partial<Route<string, object | any | undefined>>;
 }
 
 export const navigationRef = createNavigationContainerRef();
