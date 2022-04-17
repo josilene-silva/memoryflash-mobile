@@ -23,7 +23,6 @@ import {
   Progress,
   Card,
   ButtonContainer,
-  SkipButton,
   LevelContainer,
   LevelButton,
 } from './styles';
@@ -199,7 +198,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
   return (
     <Container>
       <ProgressBar>
-        <Progress percentage={50} />
+        <Progress percentage={(currentCard * 100) / cards.length} />
       </ProgressBar>
 
       <FlatList
