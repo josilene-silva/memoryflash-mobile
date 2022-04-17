@@ -38,6 +38,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
   const flipPositionAnimate = useSharedValue(0);
 
   const [currentCard, setCurrentCard] = useState(0);
+  const [startTime, setStartTime] = useState<Date>();
   const cardListRef = useRef<FlatList>(null);
 
   const [cards, setCards] = useState<CardsProps[]>([
@@ -64,6 +65,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
   useFocusEffect(
     useCallback(() => {
       loadCardsSet();
+      setStartTime(new Date());
     }, []),
   );
 
@@ -136,18 +138,62 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     setCurrentCard(prevState => prevState + 1);
   }
 
+  function haveCards() {
+    const totalCards = cards.length - 1;
+    return currentCard < totalCards;
+  }
+
+  function formatPracticePayload() {
+    const amount = {
+      amountEasy: 0,
+      amountMedium: 0,
+      amountHard: 0,
+    };
+
+    cards.map(card => {
+      if (card.difficultyLevel === 0) amount.amountEasy += 1;
+      if (card.difficultyLevel === 1) amount.amountMedium += 1;
+      if (card.difficultyLevel === 2) amount.amountHard += 1;
+    });
+
+    return {
+      setId: id,
+      startTime,
+      endTime: new Date(),
+      amountEasy: amount.amountEasy,
+      amountMedium: amount.amountMedium,
+      amountHard: amount.amountHard,
+    };
+  }
+
+  async function finishPractice() {
+    const payloadCards = cards.map(card => ({
+      id: card.id,
+      difficultyLevel: card.difficultyLevel,
+    }));
+
+    const promises = [
+      api.patch(`/cards`, payloadCards),
+      api.post(`/practices`, formatPracticePayload()),
+    ];
+    await Promise.all(promises);
+  }
+
   function handleSelectDifficultyLevel(
     card: CardsProps,
     difficultyLevel: number,
   ) {
-    const totalCards = cards.length - 1;
-    if (currentCard < totalCards) {
+    changeCardDifficultyLevel(card, difficultyLevel);
+    if (haveCards()) {
       changeCardAnimationSide();
       handleFlipCard();
     } else {
-      navigation.dispatch(StackActions.replace('PracticeFinish', { id }));
+      finishPractice()
+        .then(() =>
+          navigation.dispatch(StackActions.replace('PracticeFinish', { id })),
+        )
+        .catch(() => alert('Erro interno'));
     }
-    changeCardDifficultyLevel(card, difficultyLevel);
   }
 
   return (
@@ -198,17 +244,6 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                   title="Visualizar"
                   onPress={() => handleSeeBack(item)}
                 />
-                <SkipButton>
-                  <Text
-                    style={{ marginTop: 20 }}
-                    variant={{
-                      fontFamily: 'montserrat_bold',
-                      color: 'primary',
-                    }}
-                  >
-                    Pular
-                  </Text>
-                </SkipButton>
               </ButtonContainer>
 
               <LevelContainer visible={item.side === 1}>
