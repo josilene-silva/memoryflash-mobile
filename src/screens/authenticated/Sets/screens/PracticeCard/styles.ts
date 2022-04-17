@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Dimensions } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
@@ -36,6 +36,7 @@ type CardProps = {
 };
 
 export const Card = styled(Animated.View)<CardProps>`
+  width: ${Dimensions.get('screen').width - 40}px;
   background-color: ${({ theme, type }) =>
     type === 'front' ? theme.colors.white : theme.colors.primary};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -43,7 +44,6 @@ export const Card = styled(Animated.View)<CardProps>`
   padding: 22px 24px;
   align-items: center;
   justify-content: center;
-  /* min-height: ${RFPercentage(62)}px; */
   min-height: ${RFPercentage(58)}px;
   elevation: 2;
   display: ${({ visible }) => (visible === true ? 'flex' : 'none')};
@@ -59,6 +59,7 @@ export const ButtonContainer = styled.View<ContainerProps>`
   justify-content: center;
   margin-top: ${RFPercentage(6)}px;
   display: ${({ visible }) => (visible === true ? 'flex' : 'none')};
+  height: ${RFPercentage(24)}px;
 `;
 
 export const SkipButton = styled.TouchableOpacity``;

@@ -123,7 +123,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
       <FloatButton>
         <RoundButton
           title="Iniciar prática"
-          onPress={() => navigation.navigate('PracticeCard')}
+          onPress={() => navigation.navigate('PracticeCard', { id: set.id })}
         />
       </FloatButton>
     </Scroll>
