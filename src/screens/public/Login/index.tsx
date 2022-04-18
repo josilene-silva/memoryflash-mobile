@@ -47,10 +47,10 @@ export function Login({ navigation }: IRouterProps) {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      email: 'josilenevitoriasilva@gmail.com',
-      password: '123',
-    },
+    // defaultValues: {
+    //   email: 'josilenevitoriasilva@gmail.com',
+    //   password: '123',
+    // },
   });
 
   async function handleRegister({ email, password }: Inputs) {

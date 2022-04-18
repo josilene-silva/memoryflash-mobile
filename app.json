@@ -1,10 +1,18 @@
 {
   "expo": {
-    "name": "memoryflashmobile",
-    "slug": "memoryflashmobile",
+    "name": "MemoryFlash",
+    "slug": "memoryflash-app",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.memoryflashapp",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "com.memoryflashapp",
+      "versionCode": 1
+    }
   }
 }
