@@ -13,12 +13,40 @@ import { api } from 'src/services/api';
 import { Container, Header, SetsList } from './styles';
 
 export function Statistics({ navigation }: IRouterProps) {
-  const [sets, setSets] = useState<ISet[]>([]);
+  const [sets, setSets] = useState<ISet[]>([
+    {
+      id: '',
+      name: '',
+      description: '',
+      category: {
+        name: '',
+      },
+      cards: [
+        {
+          id: '',
+          front: '',
+          back: '',
+          difficultyLevel: 0,
+        },
+      ],
+      practices: [
+        {
+          amountEasy: 0,
+          amountMedium: 0,
+          amountHard: 0,
+        },
+      ],
+    },
+  ]);
 
   async function loadSets() {
     try {
-      const { data } = await api.get('/sets');
-      setSets(data);
+      const response = await api.get('/sets');
+      const dataSets: ISet[] = response.data;
+
+      const dataFormatted = dataSets.filter(set => set.practices.length > 0);
+
+      setSets(dataFormatted);
     } catch (error) {}
   }
 
