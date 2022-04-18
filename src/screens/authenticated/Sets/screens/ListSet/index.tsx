@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import { Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
@@ -124,7 +125,13 @@ export function ListSet({ route, navigation }: IRouterProps) {
       <FloatButton>
         <RoundButton
           title="Iniciar prática"
-          onPress={() => navigation.navigate('PracticeCard', { id: set.id })}
+          onPress={() => {
+            if (set.cards.length > 2) {
+              navigation.navigate('PracticeCard', { id: set.id });
+            } else {
+              Alert.alert('Atenção', 'Você não possui cartões suficiente!');
+            }
+          }}
         />
       </FloatButton>
     </Scroll>

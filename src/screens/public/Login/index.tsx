@@ -47,6 +47,10 @@ export function Login({ navigation }: IRouterProps) {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: 'josilenevitoriasilva@gmail.com',
+      password: '123',
+    },
   });
 
   async function handleRegister({ email, password }: Inputs) {
@@ -63,9 +67,9 @@ export function Login({ navigation }: IRouterProps) {
       });
 
       setupAxiosToken(data.token);
-      Alert.alert(`Success`, `Bem vindo(a) ${user.name}`);
+      Alert.alert(`Sucesso`, `Bem vindo(a) ${user.name}`);
     } catch (err) {
-      Alert.alert('Error', `${err.response.data.message}`);
+      Alert.alert('Erro', `${err.response.data.message}`);
     }
   }
 

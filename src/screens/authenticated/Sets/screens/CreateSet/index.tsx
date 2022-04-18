@@ -48,9 +48,9 @@ export function CreateSet() {
     };
     try {
       await api.post('/sets', payload);
-      Alert.alert(`Success`, `Conjunto cadastrado`);
+      Alert.alert(`Sucesso`, `Conjunto cadastrado`);
     } catch (err) {
-      Alert.alert('Error', `${err.response.data.message}`);
+      Alert.alert('Erro', `${err.response.data.message}`);
     }
   }
 

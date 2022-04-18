@@ -41,9 +41,9 @@ export function CreateCard({ route }: IRouterProps) {
     };
     try {
       await api.post('/cards', payload);
-      Alert.alert(`Success`, `Cartão cadastrado`);
+      Alert.alert(`Sucesso`, `Cartão cadastrado`);
     } catch (err) {
-      Alert.alert('Error', `${err.response.data.message}`);
+      Alert.alert('Erro', `${err.response.data.message}`);
     }
   }
 

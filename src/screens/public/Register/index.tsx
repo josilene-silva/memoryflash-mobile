@@ -60,9 +60,9 @@ export function Register({ navigation }: IRouterProps) {
     };
     try {
       await api.post('/users', payload);
-      Alert.alert(`Success`, `Usuário cadastrado`);
+      Alert.alert(`Sucesso`, `Usuário cadastrado`);
     } catch (err) {
-      Alert.alert('Error', `${err.response.data.message}`);
+      Alert.alert('Erro', `${err.response.data.message}`);
     }
   }
 
