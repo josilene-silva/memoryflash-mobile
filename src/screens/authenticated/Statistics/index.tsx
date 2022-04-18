@@ -13,31 +13,7 @@ import { api } from 'src/services/api';
 import { Container, Header, SetsList } from './styles';
 
 export function Statistics({ navigation }: IRouterProps) {
-  const [sets, setSets] = useState<ISet[]>([
-    {
-      id: '',
-      name: '',
-      description: '',
-      category: {
-        name: '',
-      },
-      cards: [
-        {
-          id: '',
-          front: '',
-          back: '',
-          difficultyLevel: 0,
-        },
-      ],
-      practices: [
-        {
-          amountEasy: 0,
-          amountMedium: 0,
-          amountHard: 0,
-        },
-      ],
-    },
-  ]);
+  const [sets, setSets] = useState<ISet[]>([]);
 
   async function loadSets() {
     try {
