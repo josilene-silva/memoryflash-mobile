@@ -41,6 +41,13 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
     } catch (error) {}
   }
 
+  function configureAgreement(value: number): string {
+    if (value === 1) {
+      return `${value} cartão`;
+    }
+    return `${value} cartões`;
+  }
+
   useFocusEffect(
     useCallback(() => {
       loadPractice();
@@ -77,17 +84,17 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
           <DataLine
             type="easy"
             field="Fácil"
-            label={`${practice.amountEasy} cartões`}
+            label={configureAgreement(practice.amountEasy)}
           />
           <DataLine
             type="medium"
             field="Mediana"
-            label={`${practice.amountMedium} cartões`}
+            label={configureAgreement(practice.amountMedium)}
           />
           <DataLine
             type="hard"
             field="Difícil"
-            label={`${practice.amountHard} cartões`}
+            label={configureAgreement(practice.amountHard)}
           />
           <DataLine type="title" field="Tempo" label={`${practice.time}`} />
         </InformationContainer>

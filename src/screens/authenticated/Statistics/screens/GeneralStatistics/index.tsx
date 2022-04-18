@@ -27,6 +27,13 @@ export function GeneralStatistics({ navigation, route }: IRouterProps) {
     timesPracticed: 0,
   });
 
+  function configureAgreement(value: number): string {
+    if (value === 1) {
+      return `${value} cartão`;
+    }
+    return `${value} cartões`;
+  }
+
   async function loadPractice() {
     try {
       const { data } = await api.get(`/sets/${id}`);
@@ -89,17 +96,17 @@ export function GeneralStatistics({ navigation, route }: IRouterProps) {
           <DataLine
             type="easy"
             field="Fácil"
-            label={`${practice.amountEasy} cartões`}
+            label={configureAgreement(practice.amountEasy)}
           />
           <DataLine
             type="medium"
             field="Mediana"
-            label={`${practice.amountMedium} cartões`}
+            label={configureAgreement(practice.amountMedium)}
           />
           <DataLine
             type="hard"
             field="Difícil"
-            label={`${practice.amountHard} cartões`}
+            label={configureAgreement(practice.amountHard)}
           />
           <DataLine
             type="title"
