@@ -50,7 +50,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     },
   ]);
 
-  const [set, setSet] = useState<Omit<ISet, 'cards'>>({
+  const [set, setSet] = useState<Omit<ISet, 'cards' | 'practices'>>({
     id: '',
     name: '',
     description: '',

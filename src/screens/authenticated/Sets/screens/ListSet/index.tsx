@@ -26,7 +26,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
   const { id } = route.params;
 
   const theme = useTheme();
-  const [set, setSet] = useState<ISet>({
+  const [set, setSet] = useState<Omit<ISet, 'practices'>>({
     id: '',
     name: '',
     description: '',
