@@ -2,9 +2,9 @@
   "expo": {
     "name": "MemoryFlash",
     "slug": "memoryflash-app",
-    "icon": "./assets/icon-v2.png",
+    "icon": "./assets/icon-v3.png",
     "splash": {
-      "image": "./assets/splash-v2.png",
+      "image": "./assets/splash-v3.png",
       "backgroundColor": "#5E60CE",
       "resizeMode": "contain"
     },

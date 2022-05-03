@@ -179,6 +179,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     const payloadCards = cards.map(card => ({
       id: card.id,
       difficultyLevel: card.difficultyLevel,
+      setId: id,
     }));
 
     const promises = [
