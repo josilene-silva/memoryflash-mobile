@@ -31,6 +31,13 @@ interface CardsProps extends ICard {
   side: number;
 }
 
+const FRONT = 0;
+const BACK = 1;
+
+const EASY = 0;
+const MEDIUM = 1;
+const HARD = 2;
+
 export function PracticeCard({ navigation, route }: IRouterProps) {
   const id = route.params?.id;
 
@@ -160,9 +167,9 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     };
 
     cards.map(card => {
-      if (card.difficultyLevel === 0) amount.amountEasy += 1;
-      if (card.difficultyLevel === 1) amount.amountMedium += 1;
-      if (card.difficultyLevel === 2) amount.amountHard += 1;
+      if (card.difficultyLevel === EASY) amount.amountEasy += 1;
+      if (card.difficultyLevel === MEDIUM) amount.amountMedium += 1;
+      if (card.difficultyLevel === HARD) amount.amountHard += 1;
     });
 
     return {
@@ -227,7 +234,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
           return (
             <View>
               <Card
-                visible={item.side === 0}
+                visible={item.side === FRONT}
                 type="front"
                 style={frontCardAnimated}
               >
@@ -235,37 +242,37 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
               </Card>
 
               <Card
-                visible={item.side === 1}
+                visible={item.side === BACK}
                 type="back"
                 style={backCardAnimated}
               >
                 <Text color="white">{item.back}</Text>
               </Card>
 
-              <ButtonContainer visible={item.side === 0}>
+              <ButtonContainer visible={item.side === FRONT}>
                 <RoundButton
                   title="Visualizar"
                   onPress={() => handleSeeBack(item)}
                 />
               </ButtonContainer>
 
-              <LevelContainer visible={item.side === 1}>
+              <LevelContainer visible={item.side === BACK}>
                 <LevelButton
-                  onPress={() => handleSelectDifficultyLevel(item, 0)}
+                  onPress={() => handleSelectDifficultyLevel(item, EASY)}
                 >
                   <Text fontFamily="poppins_bold" color="easy">
                     Fácil
                   </Text>
                 </LevelButton>
                 <LevelButton
-                  onPress={() => handleSelectDifficultyLevel(item, 1)}
+                  onPress={() => handleSelectDifficultyLevel(item, MEDIUM)}
                 >
                   <Text fontFamily="poppins_bold" color="medium">
                     Mediano
                   </Text>
                 </LevelButton>
                 <LevelButton
-                  onPress={() => handleSelectDifficultyLevel(item, 2)}
+                  onPress={() => handleSelectDifficultyLevel(item, HARD)}
                 >
                   <Text fontFamily="poppins_bold" color="hard">
                     Difícil

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Alert } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
@@ -28,7 +28,7 @@ import {
 } from './styles';
 
 export function ListSet({ route, navigation }: IRouterProps) {
-  const { id } = route.params;
+  const id = route.params?.id as string;
 
   const theme = useTheme();
   const [set, setSet] = useState<Omit<ISet, 'practices'>>({
@@ -49,10 +49,8 @@ export function ListSet({ route, navigation }: IRouterProps) {
   });
 
   async function loadSet() {
-    try {
-      const { data } = await api.get(`/sets/${id}`);
-      setSet(data);
-    } catch (error) {}
+    const { data } = await api.get(`/sets/${id}`);
+    setSet(data);
   }
 
   useFocusEffect(
@@ -61,9 +59,9 @@ export function ListSet({ route, navigation }: IRouterProps) {
     }, []),
   );
 
-  return (
-    <Scroll>
-      <Container>
+  const header = useMemo(
+    () => (
+      <>
         <IconContainer>
           <IconItem>
             <Icon color={theme.colors.gray_medium} size={24} name="trash" />
@@ -88,8 +86,16 @@ export function ListSet({ route, navigation }: IRouterProps) {
           <Icon color={theme.colors.primary} size={32} name="plus" />
           <AddCard>Adicionar cartão</AddCard>
         </IconItem>
+      </>
+    ),
+    [navigation, set, theme],
+  );
 
+  return (
+    <Scroll>
+      <Container>
         <CardsList
+          ListHeaderComponent={() => header}
           data={set.cards}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <CardsCard data={item} />}

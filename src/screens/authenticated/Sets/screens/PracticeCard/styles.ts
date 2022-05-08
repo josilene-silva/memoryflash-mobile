@@ -3,12 +3,12 @@ import Animated from 'react-native-reanimated';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
-  flex: 1;
+export const Container = styled.ScrollView`
   background-color: ${({ theme }) => theme.colors.ice};
   padding-right: 20px;
   padding-left: 20px;
   padding-top: ${RFPercentage(10)}px;
+  border: 1px solid red;
 `;
 
 export const ProgressBar = styled.View`
@@ -57,7 +57,6 @@ export const ButtonContainer = styled.View<ContainerProps>`
   align-self: center;
   align-items: center;
   justify-content: center;
-  margin-top: ${RFPercentage(6)}px;
   display: ${({ visible }) => (visible === true ? 'flex' : 'none')};
   height: ${RFPercentage(24)}px;
 `;

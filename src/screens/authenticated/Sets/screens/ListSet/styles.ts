@@ -15,7 +15,6 @@ export const Scroll = styled.SafeAreaView`
   background-color: ${({ theme }) => theme.colors.ice};
   padding-right: 20px;
   padding-left: 20px;
-  padding-top: 20px;
 `;
 
 export const Category = styled(Text).attrs({
@@ -52,6 +51,7 @@ export const IconContainer = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 20px;
 `;
 
 export const IconItem = styled.TouchableOpacity`
@@ -66,7 +66,7 @@ export const CardsList = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingBottom: 10,
+    paddingBottom: 50,
   },
 })``;
 

@@ -17,10 +17,8 @@ export function Sets({ navigation }: IRouterProps) {
   const [sets, setSets] = useState<ISet[]>([]);
 
   async function loadSets() {
-    try {
-      const { data } = await api.get('/sets');
-      setSets(data);
-    } catch (error) {}
+    const { data } = await api.get('/sets');
+    setSets(data);
   }
 
   useFocusEffect(
