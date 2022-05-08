@@ -22,13 +22,7 @@ export function Explore() {
         }}
         source={require('src/assets/images/building.png')}
       />
-      <Text
-        variant={{
-          fontFamily: 'poppins_medium',
-          fontSize: 20,
-          color: 'primary',
-        }}
-      >
+      <Text variant="mediumPrimaryPoppinsMedium">
         {'<'} Em construção {'/>'}
       </Text>
     </View>

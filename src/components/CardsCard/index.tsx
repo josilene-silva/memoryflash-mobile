@@ -1,12 +1,18 @@
 import React from 'react';
 /* eslint-disable no-nested-ternary */
 import { CardLayout } from 'src/components/Layout/Card';
-import { Text } from 'src/components/Text';
 import { useTheme } from 'styled-components';
 
 import { ICard } from 'src/data/types';
 
-import { IconContainer, Icon, IconItem, Container } from './styles';
+import {
+  IconContainer,
+  Icon,
+  IconItem,
+  Container,
+  Front,
+  Back,
+} from './styles';
 
 interface Props {
   data: ICard;
@@ -18,24 +24,8 @@ export function CardsCard({ data }: Props) {
   return (
     <Container>
       <CardLayout style={{ marginBottom: 20 }}>
-        <Text
-          variant={{
-            fontFamily: 'poppins_medium',
-            color: 'text_dark',
-            fontSize: 17,
-          }}
-          style={{ marginTop: 11 }}
-        >
-          {data.front}
-        </Text>
-        <Text
-          variant={{
-            fontFamily: 'poppins_regular',
-            color: 'text_dark',
-          }}
-        >
-          {data.back}
-        </Text>
+        <Front>{data.front}</Front>
+        <Back>{data.back}</Back>
         <IconContainer>
           <IconItem>
             <Icon color={theme.colors.gray_medium} size={24} name="trash" />

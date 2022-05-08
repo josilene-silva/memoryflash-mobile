@@ -35,15 +35,7 @@ export function Statistics({ navigation }: IRouterProps) {
   return (
     <Container>
       <Header>
-        <Text
-          variant={{
-            fontFamily: 'montserrat_bold',
-            fontSize: 20,
-            color: 'primary',
-          }}
-        >
-          Estatísticas
-        </Text>
+        <Text variant="titlePrimaryMontserratBold">Estatísticas</Text>
       </Header>
 
       <SetsList

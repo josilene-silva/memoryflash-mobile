@@ -4,7 +4,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
-import { InputForm } from '../../../components/Form/InputForm';
+import { InputForm } from 'src/components/Form/InputForm';
+import { Button } from 'src/components/Form/Button';
+
+import { api, setupAxiosToken } from 'src/services/api';
+
+import { useAuth } from 'src/hooks/auth';
+import { IRouterProps } from 'src/routes/navigation';
 import {
   Container,
   Title,
@@ -20,13 +26,6 @@ import {
   Scroll,
   ActionText,
 } from './styles';
-
-import { Button } from '../../../components/Form/Button';
-
-import { api, setupAxiosToken } from '../../../services/api';
-
-import { useAuth } from '../../../hooks/auth';
-import { IRouterProps } from '../../../routes/navigation';
 
 type Inputs = {
   password?: string;
@@ -47,10 +46,10 @@ export function Login({ navigation }: IRouterProps) {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
-    // defaultValues: {
-    //   email: 'josilenevitoriasilva@gmail.com',
-    //   password: '123',
-    // },
+    defaultValues: {
+      email: 'josilenevitoriasilva@gmail.com',
+      password: '123',
+    },
   });
 
   async function handleRegister({ email, password }: Inputs) {

@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
+import { Text } from 'src/components/Text';
+
 export const Container = styled.View``;
 
 export const Scroll = styled.ScrollView`
@@ -15,17 +17,15 @@ export const Header = styled.View`
   align-items: center;
 `;
 
-export const Title = styled.Text`
-  font-size: ${RFValue(24)}px;
-  font-family: ${({ theme }) => theme.fonts.montserrat_bold};
-  color: ${({ theme }) => theme.colors.primary};
+export const Title = styled(Text).attrs({
+  variant: 'titlePrimaryMontserratBold',
+})`
   text-align: center;
 `;
 
-export const Subtitle = styled.Text`
-  font-size: ${RFValue(12)}px;
-  font-family: ${({ theme }) => theme.fonts.poppins_regular};
-  color: ${({ theme }) => theme.colors.text};
+export const Subtitle = styled(Text).attrs({
+  variant: 'smallTextPoppinsRegular',
+})`
   text-align: center;
   margin-top: 13px;
 `;
@@ -46,16 +46,13 @@ export const AccountAction = styled.View`
   margin-top: ${RFPercentage(8)}px;
   margin-bottom: ${RFPercentage(2)}px;
 `;
-export const Question = styled.Text`
-  font-size: ${RFValue(12)}px;
-  font-family: ${({ theme }) => theme.fonts.poppins_regular};
-  color: ${({ theme }) => theme.colors.text};
-`;
+
+export const Question = styled(Text).attrs({
+  variant: 'smallTextPoppinsRegular',
+})``;
 
 export const Action = styled.TouchableOpacity``;
 
-export const ActionText = styled.Text`
-  font-size: ${RFValue(12)}px;
-  font-family: ${({ theme }) => theme.fonts.poppins_regular};
-  color: ${({ theme }) => theme.colors.primary};
-`;
+export const ActionText = styled(Text).attrs({
+  variant: 'smallPrimaryPoppinsRegular',
+})``;

@@ -195,8 +195,8 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
           name: set.name,
         }),
       );
-    } catch {
-      alert('Erro interno');
+    } catch (e) {
+      alert(e.response.data.message);
     }
   }
 
@@ -231,14 +231,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                 type="front"
                 style={frontCardAnimated}
               >
-                <Text
-                  variant={{
-                    fontFamily: 'poppins_regular',
-                    color: 'title',
-                  }}
-                >
-                  {item.front}
-                </Text>
+                <Text color="title">{item.front}</Text>
               </Card>
 
               <Card
@@ -246,14 +239,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                 type="back"
                 style={backCardAnimated}
               >
-                <Text
-                  variant={{
-                    fontFamily: 'poppins_regular',
-                    color: 'white',
-                  }}
-                >
-                  {item.back}
-                </Text>
+                <Text color="white">{item.back}</Text>
               </Card>
 
               <ButtonContainer visible={item.side === 0}>
@@ -267,39 +253,21 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
                 <LevelButton
                   onPress={() => handleSelectDifficultyLevel(item, 0)}
                 >
-                  <Text
-                    variant={{
-                      fontFamily: 'poppins_bold',
-                      fontSize: 16,
-                      color: 'easy',
-                    }}
-                  >
+                  <Text fontFamily="poppins_bold" color="easy">
                     Fácil
                   </Text>
                 </LevelButton>
                 <LevelButton
                   onPress={() => handleSelectDifficultyLevel(item, 1)}
                 >
-                  <Text
-                    variant={{
-                      fontFamily: 'poppins_bold',
-                      fontSize: 16,
-                      color: 'medium',
-                    }}
-                  >
+                  <Text fontFamily="poppins_bold" color="medium">
                     Mediano
                   </Text>
                 </LevelButton>
                 <LevelButton
                   onPress={() => handleSelectDifficultyLevel(item, 2)}
                 >
-                  <Text
-                    variant={{
-                      fontFamily: 'poppins_bold',
-                      fontSize: 16,
-                      color: 'hard',
-                    }}
-                  >
+                  <Text fontFamily="poppins_bold" color="hard">
                     Difícil
                   </Text>
                 </LevelButton>

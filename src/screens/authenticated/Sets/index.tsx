@@ -32,15 +32,7 @@ export function Sets({ navigation }: IRouterProps) {
   return (
     <Container>
       <Header>
-        <Text
-          variant={{
-            fontFamily: 'montserrat_bold',
-            fontSize: 20,
-            color: 'primary',
-          }}
-        >
-          Conjunto de cartões
-        </Text>
+        <Text variant="titlePrimaryMontserratBold">Conjunto de cartões</Text>
       </Header>
 
       <SetsList

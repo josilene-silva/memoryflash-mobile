@@ -1,9 +1,10 @@
 import { Text } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { IVariant, variant } from 'src/utils/variants';
 import styled from 'styled-components/native';
 
 export interface ITextProps {
-  color:
+  color?:
     | 'primary'
     | 'white'
     | 'ice'
@@ -16,7 +17,7 @@ export interface ITextProps {
     | 'easy'
     | 'hard'
     | 'medium';
-  fontFamily:
+  fontFamily?:
     | 'montserrat_regular'
     | 'montserrat_medium'
     | 'montserrat_bold'
@@ -24,11 +25,18 @@ export interface ITextProps {
     | 'poppins_medium'
     | 'poppins_bold';
   fontSize?: number;
+  variant?: IVariant;
 }
 
-export const Container = styled(Text)<ITextProps>`
-  color: ${({ theme, color }) => theme.colors[color]};
-  font-size: ${({ fontSize }) =>
-    fontSize ? RFValue(fontSize) : RFValue(13)}px;
-  font-family: ${({ theme, fontFamily }) => theme.fonts[fontFamily]};
+function calculateFontSize(value: number): number {
+  return RFValue(value - 3);
+}
+
+export const Container = styled(Text).attrs<ITextProps>(
+  props => props.variant && variant[props.variant],
+)<ITextProps>`
+  color: ${({ theme, color = 'text_dark' }) => theme.colors[color]};
+  font-size: ${({ fontSize = 16 }) => calculateFontSize(fontSize)}px;
+  font-family: ${({ theme, fontFamily = 'poppins_regular' }) =>
+    theme.fonts[fontFamily]};
 `;

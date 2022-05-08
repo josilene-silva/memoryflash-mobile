@@ -4,14 +4,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from 'styled-components';
 
 import { IRouterProps } from 'src/routes/navigation';
+
 import { RoundButton } from 'src/components/RoundButton';
-import { Text } from 'src/components/Text';
 import { CardLayout } from 'src/components/Layout/Card';
+import { CardsCard } from 'src/components/CardsCard';
 
 import { ISet } from 'src/data/types';
 
 import { api } from 'src/services/api';
-import { CardsCard } from 'src/components/CardsCard';
 
 import {
   Container,
@@ -21,6 +21,10 @@ import {
   IconItem,
   CardsList,
   FloatButton,
+  Category,
+  About,
+  Description,
+  AddCard,
 } from './styles';
 
 export function ListSet({ route, navigation }: IRouterProps) {
@@ -71,34 +75,10 @@ export function ListSet({ route, navigation }: IRouterProps) {
         </IconContainer>
 
         <CardLayout style={{ marginTop: 30 }}>
-          <Text
-            variant={{
-              fontFamily: 'montserrat_bold',
-              color: 'primary',
-              fontSize: 10,
-            }}
-            style={{ marginBottom: 10 }}
-          >
-            {set.category.name}
-          </Text>
+          <Category>{set.category.name}</Category>
 
-          <Text
-            variant={{
-              fontFamily: 'montserrat_bold',
-              color: 'text_dark',
-            }}
-          >
-            Sobre
-          </Text>
-          <Text
-            variant={{
-              fontFamily: 'poppins_regular',
-              color: 'text_dark',
-            }}
-            style={{ marginTop: 11 }}
-          >
-            {set.description}
-          </Text>
+          <About>Sobre</About>
+          <Description>{set.description}</Description>
         </CardLayout>
 
         <IconItem
@@ -106,14 +86,7 @@ export function ListSet({ route, navigation }: IRouterProps) {
           onPress={() => navigation.navigate('CreateCard', { setId: set.id })}
         >
           <Icon color={theme.colors.primary} size={32} name="plus" />
-          <Text
-            variant={{
-              fontFamily: 'montserrat_bold',
-              color: 'primary',
-            }}
-          >
-            Adicionar cartão
-          </Text>
+          <AddCard>Adicionar cartão</AddCard>
         </IconItem>
 
         <CardsList

@@ -1,26 +1,21 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
+
+import { Text } from '../Text';
 
 export const Container = styled.TouchableOpacity``;
 
-export const Category = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.poppins_bold};
-  font-size: ${RFValue(10)}px;
-  color: ${({ theme }) => theme.colors.primary};
-`;
+export const Category = styled(Text).attrs({
+  variant: 'smallPrimaryPoppinsBold',
+})``;
 
 export const SetInfo = styled.View`
   margin-top: 8px;
 `;
 
-export const SetTitle = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.poppins_medium};
-  font-size: ${RFValue(18)}px;
-  color: ${({ theme }) => theme.colors.title};
-`;
+export const SetTitle = styled(Text).attrs({
+  variant: 'mediumTitlePoppinsMedium',
+})``;
 
-export const CardsAmount = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.poppins_regular};
-  font-size: ${RFValue(13)}px;
-  color: ${({ theme }) => theme.colors.text};
-`;
+export const CardsAmount = styled(Text).attrs({
+  color: 'text',
+})``;

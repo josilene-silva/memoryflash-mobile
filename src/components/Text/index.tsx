@@ -2,17 +2,21 @@ import React from 'react';
 import { TextProps } from 'react-native';
 import { Container, ITextProps } from './styles';
 
-type Props = TextProps & {
-  variant: ITextProps;
-};
+export type Props = TextProps & ITextProps;
 
-export function Text({ style, variant, children }: Props) {
+export function Text({
+  children,
+  fontFamily,
+  fontSize,
+  color,
+  ...rest
+}: Props) {
   return (
     <Container
-      fontFamily={variant.fontFamily}
-      fontSize={variant.fontSize}
-      color={variant.color}
-      style={style}
+      fontFamily={fontFamily}
+      fontSize={fontSize}
+      color={color}
+      {...rest}
     >
       {children}
     </Container>

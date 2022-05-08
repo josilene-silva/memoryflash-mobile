@@ -3,7 +3,8 @@ import { FlatList, FlatListProps } from 'react-native';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Feather } from '@expo/vector-icons';
 
-import { ICard } from '../../../../../data/types';
+import { ICard } from 'src/data/types';
+import { Text } from 'src/components/Text';
 
 export const Container = styled.View`
   flex: 1;
@@ -16,6 +17,25 @@ export const Scroll = styled.SafeAreaView`
   padding-left: 20px;
   padding-top: 20px;
 `;
+
+export const Category = styled(Text).attrs({
+  variant: 'smallPrimaryPoppinsBold',
+})`
+  margin-bottom: 10px;
+`;
+
+export const About = styled(Text).attrs({
+  fontFamily: 'montserrat_bold',
+})``;
+
+export const Description = styled(Text)`
+  margin-top: 11px;
+`;
+
+export const AddCard = styled(Text).attrs({
+  fontFamily: 'montserrat_bold',
+  color: 'primary',
+})``;
 
 interface IconProps {
   color: string;

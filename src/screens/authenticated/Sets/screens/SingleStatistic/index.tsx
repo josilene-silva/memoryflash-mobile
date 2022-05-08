@@ -3,7 +3,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
 
 import { BarChart } from 'src/components/BarChart';
-import { Text } from 'src/components/Text';
 import { DataLine } from 'src/components/DataLine';
 
 import { IRouterProps } from 'src/routes/navigation';
@@ -11,7 +10,7 @@ import { IPractice } from 'src/data/types/IPractice';
 
 import { api } from 'src/services/api';
 
-import { Container, Scroll, InformationContainer } from './styles';
+import { Container, Scroll, InformationContainer, Data } from './styles';
 
 export function SingleStatistic({ navigation, route }: IRouterProps) {
   const id = route.params?.id;
@@ -70,16 +69,7 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
         />
 
         <InformationContainer>
-          <Text
-            variant={{
-              fontFamily: 'montserrat_medium',
-              color: 'title',
-              fontSize: 18,
-            }}
-            style={{ marginBottom: 20 }}
-          >
-            Dados
-          </Text>
+          <Data>Dados</Data>
 
           <DataLine
             type="easy"

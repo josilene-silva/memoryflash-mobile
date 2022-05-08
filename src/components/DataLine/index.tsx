@@ -13,13 +13,11 @@ type Props = {
 export function DataLine({ type, label, field }: Props) {
   return (
     <Container>
-      <Text variant={{ fontFamily: 'poppins_medium', color: type }}>
+      <Text fontFamily="poppins_medium" color={type}>
         {field}
       </Text>
 
-      <Text variant={{ fontFamily: 'poppins_regular', color: type }}>
-        {label}
-      </Text>
+      <Text color={type}>{label}</Text>
     </Container>
   );
 }
