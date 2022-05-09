@@ -3,6 +3,8 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { SetsCard } from 'src/components/SetsCard';
 import { Text } from 'src/components/Text';
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
 
 import { IRouterProps } from 'src/routes/navigation';
 
@@ -10,20 +12,40 @@ import { ISet } from 'src/data/types';
 
 import { api } from 'src/services/api';
 
+import { ErrorType, getError } from 'src/utils/error';
+
 import { Container, Header, SetsList } from './styles';
 
 export function Statistics({ navigation }: IRouterProps) {
   const [sets, setSets] = useState<ISet[]>([]);
 
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
+  });
+
   async function loadSets() {
     try {
+      setLoadingRequest(true);
       const response = await api.get('/sets');
       const dataSets: ISet[] = response.data;
 
       const dataFormatted = dataSets.filter(set => set.practices.length > 0);
 
       setSets(dataFormatted);
-    } catch (error) {}
+    } catch (err) {
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
+    }
+    setLoadingRequest(false);
   }
 
   useFocusEffect(
@@ -34,6 +56,15 @@ export function Statistics({ navigation }: IRouterProps) {
 
   return (
     <Container>
+      <LoaderRequest visible={loadingRequest} />
+      <Modal
+        type={modalResponseData.type}
+        message={modalResponseData.message}
+        visible={modalResponseData.isVisible}
+        onPress={() =>
+          setModalResponseData(old => ({ ...old, isVisible: false }))
+        }
+      />
       <Header>
         <Text variant="titlePrimaryMontserratBold">Estatísticas</Text>
       </Header>
