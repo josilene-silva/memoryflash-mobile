@@ -1,6 +1,7 @@
 export default {
   colors: {
     primary: '#5E60CE',
+    primary_light: 'rgba(94,96,206,.5)',
 
     white: '#FFFFFF',
     ice: '#F5F5F5',

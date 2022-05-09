@@ -1,5 +1,6 @@
 export type IColors =
   | 'primary'
+  | 'primary_light'
   | 'white'
   | 'ice'
   | 'background_input'
