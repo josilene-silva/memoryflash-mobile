@@ -8,7 +8,6 @@ export const Container = styled.ScrollView`
   padding-right: 20px;
   padding-left: 20px;
   padding-top: ${RFPercentage(10)}px;
-  border: 1px solid red;
 `;
 
 export const ProgressBar = styled.View`

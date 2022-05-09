@@ -11,11 +11,16 @@ import { StackActions, useFocusEffect } from '@react-navigation/native';
 
 import { Text } from 'src/components/Text';
 import { RoundButton } from 'src/components/RoundButton';
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
 
 import { IRouterProps } from 'src/routes/navigation';
+
 import { ICard, ISet } from 'src/data/types';
 
 import { api } from 'src/services/api';
+
+import { ErrorType, getError } from 'src/utils/error';
 
 import {
   Container,
@@ -31,6 +36,8 @@ interface CardsProps extends ICard {
   side: number;
 }
 
+type SetProps = Omit<ISet, 'cards' | 'practices'>;
+
 const FRONT = 0;
 const BACK = 1;
 
@@ -45,28 +52,22 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
 
   const [currentCard, setCurrentCard] = useState(0);
   const [startTime, setStartTime] = useState<Date>();
-  const cardListRef = useRef<FlatList>(null);
 
-  const [cards, setCards] = useState<CardsProps[]>([
-    {
-      id: '',
-      front: '',
-      back: '',
-      difficultyLevel: 0,
-      side: 0,
-    },
-  ]);
-
-  const [set, setSet] = useState<Omit<ISet, 'cards' | 'practices'>>({
-    id: '',
-    name: '',
-    description: '',
-    category: {
-      name: '',
-    },
+  const [loadingRequest, setLoadingRequest] = useState(false);
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
   });
 
+  const cardListRef = useRef<FlatList>(null);
+
+  const [cards, setCards] = useState<CardsProps[]>([] as CardsProps[]);
+
+  const [set, setSet] = useState<SetProps>({} as SetProps);
+
   async function loadCardsSet() {
+    setLoadingRequest(true);
     try {
       const { data } = await api.get(`/sets/${id}`);
       const cardsFormatted: CardsProps[] = data.cards.map(card => ({
@@ -75,7 +76,17 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
       }));
       setCards(cardsFormatted);
       setSet(data);
-    } catch (error) {}
+    } catch (err) {
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
+    }
+
+    setLoadingRequest(false);
   }
 
   useFocusEffect(
@@ -195,6 +206,7 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
     ];
 
     try {
+      setLoadingRequest(true);
       const [_, response] = await Promise.all(promises);
       navigation.dispatch(
         StackActions.replace('PracticeFinish', {
@@ -202,9 +214,17 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
           name: set.name,
         }),
       );
-    } catch (e) {
-      alert(e.response.data.message);
+      setLoadingRequest(false);
+    } catch (err) {
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
     }
+    setLoadingRequest(false);
   }
 
   function handleSelectDifficultyLevel(
@@ -222,6 +242,16 @@ export function PracticeCard({ navigation, route }: IRouterProps) {
 
   return (
     <Container>
+      <LoaderRequest visible={loadingRequest} />
+      <Modal
+        type={modalResponseData.type}
+        message={modalResponseData.message}
+        visible={modalResponseData.isVisible}
+        onPress={() =>
+          setModalResponseData(old => ({ ...old, isVisible: false }))
+        }
+      />
+
       <ProgressBar>
         <Progress percentage={(currentCard * 100) / cards.length} />
       </ProgressBar>
