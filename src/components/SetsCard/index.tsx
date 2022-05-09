@@ -12,13 +12,13 @@ interface Props {
 }
 
 export function SetsCard({ data, onPress }: Props) {
-  const cardsAmount = data.cards.length;
+  const cardsAmount = data?.cards?.length || 0;
   return (
     <Container onPress={onPress}>
       <CardLayout style={{ marginBottom: 20 }}>
-        <Category>{data.category.name}</Category>
+        <Category>{data?.category?.name}</Category>
         <SetInfo>
-          <SetTitle>{data.name}</SetTitle>
+          <SetTitle>{data?.name}</SetTitle>
           <CardsAmount>
             {cardsAmount === 0
               ? 'Nenhum cartão'
