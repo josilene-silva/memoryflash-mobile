@@ -1,15 +1,18 @@
-import React from 'react';
-import { Alert } from 'react-native';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { InputForm } from 'src/components/Form/InputForm';
 import { Button } from 'src/components/Form/Button';
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
 
 import { api } from 'src/services/api';
 
 import { IRouterProps } from 'src/routes/navigation';
+
+import { ErrorType, getError } from 'src/utils/error';
 
 import {
   Container,
@@ -33,6 +36,14 @@ type Inputs = {
 };
 
 export function Register({ navigation }: IRouterProps) {
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
+  });
+
   const schema = Yup.object().shape({
     email: Yup.string().required('Email é obrigatório'),
     password: Yup.string().required('Senha é obrigatória'),
@@ -49,6 +60,7 @@ export function Register({ navigation }: IRouterProps) {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
@@ -60,15 +72,39 @@ export function Register({ navigation }: IRouterProps) {
       name,
     };
     try {
+      setLoadingRequest(true);
       await api.post('/users', payload);
-      Alert.alert(`Sucesso`, `Usuário cadastrado`);
+
+      setModalResponseData({
+        type: 'success',
+        message: 'Usuário cadastrado',
+        isVisible: true,
+      });
+
+      reset();
     } catch (err) {
-      Alert.alert('Erro', `${err.response.data.message}`);
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
     }
+    setLoadingRequest(false);
   }
 
   return (
     <Scroll>
+      <LoaderRequest visible={loadingRequest} />
+      <Modal
+        type={modalResponseData.type}
+        message={modalResponseData.message}
+        visible={modalResponseData.isVisible}
+        onPress={() =>
+          setModalResponseData(old => ({ ...old, isVisible: false }))
+        }
+      />
       <Container>
         <Header>
           <Title>Crie uma nova conta</Title>
