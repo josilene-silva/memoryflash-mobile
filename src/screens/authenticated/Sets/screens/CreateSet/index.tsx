@@ -4,13 +4,19 @@ import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { useFocusEffect } from '@react-navigation/native';
-import { Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
-import { InputForm } from '../../../../../components/Form/InputForm';
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
+import { InputForm } from 'src/components/Form/InputForm';
+import { Button } from 'src/components/Form/Button';
+import { DropdownForm } from 'src/components/Form/DropdownForm';
+
+import { ErrorType, getError } from 'src/utils/error';
+
+import { api } from 'src/services/api';
+
 import { Container, Fields, Form, Scroll } from './styles';
-import { api } from '../../../../../services/api';
-import { Button } from '../../../../../components/Form/Button';
-import { DropdownForm } from '../../../../../components/Form/DropdownForm';
 
 type Inputs = {
   name?: string;
@@ -25,6 +31,13 @@ export interface CategoriesListProps {
 
 export function CreateSet() {
   const [categories, setCategories] = useState([]);
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
+  });
 
   const schema = Yup.object().shape({
     name: Yup.string().required('Nome é obrigatório'),
@@ -36,6 +49,7 @@ export function CreateSet() {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
@@ -47,11 +61,26 @@ export function CreateSet() {
       description,
     };
     try {
+      setLoadingRequest(true);
       await api.post('/sets', payload);
-      Alert.alert(`Sucesso`, `Conjunto cadastrado`);
+
+      setModalResponseData({
+        type: 'success',
+        message: 'Conjunto cadastrado',
+        isVisible: true,
+      });
+
+      reset();
     } catch (err) {
-      Alert.alert('Erro', `${err.response.data.message}`);
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
     }
+    setLoadingRequest(false);
   }
 
   async function loadCategories() {
@@ -66,7 +95,15 @@ export function CreateSet() {
       });
 
       setCategories(categoriesFormatted);
-    } catch (error) {}
+    } catch (err) {
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
+    }
   }
 
   useFocusEffect(
@@ -78,6 +115,15 @@ export function CreateSet() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Scroll>
+        <LoaderRequest visible={loadingRequest} />
+        <Modal
+          type={modalResponseData.type}
+          message={modalResponseData.message}
+          visible={modalResponseData.isVisible}
+          onPress={() =>
+            setModalResponseData(old => ({ ...old, isVisible: false }))
+          }
+        />
         <Container>
           <Form>
             <Fields>
