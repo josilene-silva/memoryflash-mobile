@@ -17,6 +17,8 @@ export default {
     easy: '#5390D9',
     hard: '#F23333',
     medium: '#2A9D8F',
+
+    attention: '#FFE70D',
   },
 
   fonts: {
