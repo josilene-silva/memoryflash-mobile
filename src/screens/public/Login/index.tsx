@@ -1,5 +1,4 @@
-import React from 'react';
-import { Alert } from 'react-native';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -10,7 +9,14 @@ import { Button } from 'src/components/Form/Button';
 import { api, setupAxiosToken } from 'src/services/api';
 
 import { useAuth } from 'src/hooks/auth';
+
 import { IRouterProps } from 'src/routes/navigation';
+
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
+
+import { getError, ErrorType } from 'src/utils/error';
+
 import {
   Container,
   Title,
@@ -33,12 +39,20 @@ type Inputs = {
 };
 
 export function Login({ navigation }: IRouterProps) {
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
+  });
+
   const schema = Yup.object().shape({
     email: Yup.string().required('Email é obrigatório'),
     password: Yup.string().required('Senha é obrigatória'),
   });
 
-  const { onAuthUser, user } = useAuth();
+  const { onAuthUser } = useAuth();
 
   const {
     control,
@@ -58,22 +72,37 @@ export function Login({ navigation }: IRouterProps) {
       password,
     };
     try {
+      setLoadingRequest(true);
       const { data } = await api.post('/login', payload);
       onAuthUser({
         name: data.user.name,
         email: data.user.email,
         token: data.token,
       });
-
       setupAxiosToken(data.token);
-      Alert.alert(`Sucesso`, `Bem vindo(a) ${user.name}`);
     } catch (err) {
-      Alert.alert('Erro', `${err.response.data.message}`);
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
     }
+    setLoadingRequest(false);
   }
 
   return (
     <Scroll>
+      <LoaderRequest visible={loadingRequest} />
+      <Modal
+        type={modalResponseData.type}
+        message={modalResponseData.message}
+        visible={modalResponseData.isVisible}
+        onPress={() =>
+          setModalResponseData(old => ({ ...old, isVisible: false }))
+        }
+      />
       <Container>
         <Header>
           <Title>Bem vindo de volta!</Title>
