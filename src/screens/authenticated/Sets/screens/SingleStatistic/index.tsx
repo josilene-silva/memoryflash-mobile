@@ -4,16 +4,29 @@ import dayjs from 'dayjs';
 
 import { BarChart } from 'src/components/BarChart';
 import { DataLine } from 'src/components/DataLine';
+import { LoaderRequest } from 'src/components/LoaderRequest';
+import { IModalData, Modal } from 'src/components/Modal';
 
 import { IRouterProps } from 'src/routes/navigation';
+
 import { IPractice } from 'src/data/types/IPractice';
 
 import { api } from 'src/services/api';
+
+import { ErrorType, getError } from 'src/utils/error';
 
 import { Container, Scroll, InformationContainer, Data } from './styles';
 
 export function SingleStatistic({ navigation, route }: IRouterProps) {
   const id = route.params?.id;
+
+  const [loadingRequest, setLoadingRequest] = useState(false);
+
+  const [modalResponseData, setModalResponseData] = useState<IModalData>({
+    type: 'attention',
+    message: '',
+    isVisible: false,
+  });
 
   const [practice, setPractice] = useState<IPractice & { time: string }>({
     amountEasy: 0,
@@ -24,6 +37,7 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
 
   async function loadPractice() {
     try {
+      setLoadingRequest(true);
       const { data } = await api.get(`/practices/${id}`);
       const startTime = dayjs(data.startTime);
       const endTime = dayjs(data.endTime);
@@ -37,7 +51,16 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
       }
 
       setPractice(data);
-    } catch (error) {}
+    } catch (err) {
+      const error = getError(err as ErrorType);
+
+      setModalResponseData({
+        type: error.type,
+        message: error.message,
+        isVisible: true,
+      });
+    }
+    setLoadingRequest(false);
   }
 
   function configureAgreement(value: number): string {
@@ -60,6 +83,15 @@ export function SingleStatistic({ navigation, route }: IRouterProps) {
   return (
     <Scroll>
       <Container>
+        <LoaderRequest visible={loadingRequest} />
+        <Modal
+          type={modalResponseData.type}
+          message={modalResponseData.message}
+          visible={modalResponseData.isVisible}
+          onPress={() =>
+            setModalResponseData(old => ({ ...old, isVisible: false }))
+          }
+        />
         <BarChart
           data={{
             ...practice,
