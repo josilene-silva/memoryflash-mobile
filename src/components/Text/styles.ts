@@ -1,29 +1,13 @@
 import { Text } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { IVariant, variant } from 'src/utils/variants';
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+
+import { IColors, IFontFamily } from 'src/data/types';
+import { IVariant, variant } from 'src/utils/variants';
 
 export interface ITextProps {
-  color?:
-    | 'primary'
-    | 'white'
-    | 'ice'
-    | 'background_input'
-    | 'gray_light'
-    | 'gray_medium'
-    | 'title'
-    | 'text'
-    | 'text_dark'
-    | 'easy'
-    | 'hard'
-    | 'medium';
-  fontFamily?:
-    | 'montserrat_regular'
-    | 'montserrat_medium'
-    | 'montserrat_bold'
-    | 'poppins_regular'
-    | 'poppins_medium'
-    | 'poppins_bold';
+  color?: IColors;
+  fontFamily?: IFontFamily;
   fontSize?: number;
   variant?: IVariant;
 }
