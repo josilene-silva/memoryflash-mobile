@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { IRouterProps } from 'src/routes/navigation';
@@ -129,7 +129,11 @@ export function ListSet({ route, navigation }: IRouterProps) {
             if (set.cards.length > 2) {
               navigation.navigate('PracticeCard', { id: set.id });
             } else {
-              Alert.alert('Atenção', 'Você não possui cartões suficiente!');
+              setModalResponseData({
+                type: 'attention',
+                message: 'Você não possui cartões suficiente!',
+                isVisible: true,
+              });
             }
           }}
         />
